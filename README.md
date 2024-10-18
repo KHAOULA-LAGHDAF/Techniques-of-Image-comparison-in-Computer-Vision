@@ -17,6 +17,7 @@ o	A predefined pixel tolerance value is set, which represents the maximum accept
 o	If the number of dissimilar pixels is less than or equal to the pixel tolerance, the two images are considered identical. This means that the differences are negligible and do not significantly affect the overall perception of similarity.
 o	Conversely, if the number of dissimilar pixels exceeds the pixel tolerance, the images are deemed different, indicating that they are not sufficiently similar for the purposes of the application.
 
+![image](https://github.com/user-attachments/assets/a2f57517-c79a-4c69-8bc3-6b0c893debb4)
 
 
 
@@ -34,15 +35,26 @@ SSIM is based on the idea that the structure of an image (the arrangement of pix
 2.	Calculating Luminance, Contrast, and Structure:
 
 SSIM is computed using three main components:
-1.	Luminance: Measures the brightness of the images.  
-2.	Contrast: Measures the contrast of variance of the images. 
+1.	Luminance: Measures the brightness of the images.
+   ![image](https://github.com/user-attachments/assets/06960f58-555e-4ab8-8763-0b675a26358d)
  
-3.	Structure: Measure the correlation between pixels in the images.  
+2.	Contrast: Measures the contrast of variance of the images.
+   ![image](https://github.com/user-attachments/assets/f1990c4f-2098-40d9-94eb-45c8fbaa6e6f)
+
+ 
+3.	Structure: Measure the correlation between pixels in the images.
+   ![image](https://github.com/user-attachments/assets/617db06a-39fb-4e76-a281-31226fd265d7)
+
 Overall, it is calculated as: 
+
  
+ ![image](https://github.com/user-attachments/assets/cb5cccd5-2af6-4386-9aae-c5c22f464e1a)
+
 
 Where:
  
+![image](https://github.com/user-attachments/assets/e6564f2e-030c-4c15-b62b-87afa6e37275)
+
 
 Overall Similarity Score:
 The SSIM value ranges from -1 to 1, where:
@@ -88,6 +100,7 @@ After building the scale-space and finding potential keypoints (local maxima or 
 After filtering out low-contrast and edge-response keypoints, the remaining keypoints are considered as well-localized and stable keypoints, making them ideal for use in further processing.
 
  
+![image](https://github.com/user-attachments/assets/a2e0e20f-ded2-4217-a125-5e42f8db3d54)
 
 
 3.	Orientation Assignment: 
@@ -96,10 +109,13 @@ The identified keypoints are considered stable (they won’t change much if the 
 
 Each keypoint is given a direction to make the algorithm resistant to image rotation. A small region around the keypoint is analyzed based on its scale, and the magnitude and gradients in the image are calculated. An orientation histogram with 36 bins is created, covering all possible directions (360 degrees). The highest peak in the histogram represents the main direction, but any other peak that is 80% or more of the highest peak is also used to assign an additional direction. This means that keypoints at the same location and scale can have different directions, improving the reliability of matching across images.
 
+![image](https://github.com/user-attachments/assets/6342c93e-0af5-4146-a81a-808b075d9765)
+
 4.	Key Points Descriptor: 
 
 A keypoint descriptor is a way to describe keypoints in an image. To create it, we look at a 16x16 area around each keypoint and divide this area into 16 smaller blocks, each 4x4 in size. For each small block, we create an 8-bin histogram to capture the directions of features. This results in a total of 128 values that make up the keypoint descriptor. The descriptor is scale-invariant, rotation-invariant, and robust to changes in lighting and viewpoint.
 
+![image](https://github.com/user-attachments/assets/c1ce1739-4fb6-4f46-a7e2-a79e1a6121b7)
 
 
 
